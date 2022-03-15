@@ -1,0 +1,101 @@
+---
+title: "stablemarriage Package Summary"
+author: "Danielle Notice"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{stablemarriage Summary}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r message=FALSE, warning=FALSE}
+library(devtools)
+install_github('danotice/stablemarriage')
+library(stablemarriage)
+```
+
+### Current functions in package
+- `find_stable_marriages()` - implementation of fundemental algorithm
+- `find_stable_marriages_safe()` - implementation of the algorithm that checks the inputs are valid
+- `random_pref_table()` - 
+- `check_pref_table()` - check that a pair of preference tables are compatible
+
+### Helper functions (that cannot be accessed)
+- `converter_prefs()`
+- `get_scores_int()`
+
+## Preference tables
+
+Preference tables should be entered as named nested lists. See example below:
+```{r}
+male1 = list("A"=c("a","b","c"), "B"=c("b","a","c"), "C"=c("a","c","b"))
+female1 = list("a"=c("A","B","C"), "b"=c("B","C","A"), "c" = c("A","C","B"))
+```
+
+You can also generate random preference tables using `random_pref_table()`. This takes the list of males and the list of females. If the argument `persons` is the list of males and `choices` is the list of females, then a male preference table is generated (and vice versa).
+
+### Included example data
+Included in the package are 2 pairs of example preference tables. Data type - Lists of character vectors.
+
+- `male_prefs1` - example 4x4 preference table
+- `female_prefs1` - example 4x4 preference table
+- `male_prefs3` - example 5x5 preference table
+- `female_prefs3` - example 5x5 preference table
+```{r}
+male_prefs1
+female_prefs1
+```
+
+
+You can check that a pair of preference tables are compatible using `check_pref_table()`.
+```{r}
+check_pref_tables(male1,female1)
+check_pref_tables(male_prefs1,female_prefs3) #incompatible dimensions
+```
+
+## Fundamental Algorithm Implementation - data types
+To use the C++ implementation in the R packages I used data structures from the Rcpp library in C++. 
+
+### Preference tables
+In the original C++ code, preference tables were of type `std::unordered_map<std::string, std::list<std::string>>`. In R, the ideal data type for the preference table is a `list`. The Rcpp library has the data type `List` which is automatically marshalls the data between R and C++. So included is the function `converter_prefs()` that allows the R input to be used in the C++ implementation. 
+
+The benefit of using C++ `Rccp::List`, is that if the preference tables are entered as a dataframe, they will also be automatically marshalled to type `List`, so an additional converter function does not need to be written.
+
+```{r}
+fm_d = as.data.frame(female1,stringsAsFactors = F)
+m_d = as.data.frame(male1,stringsAsFactors = F)
+find_stable_marriages(m_d,fm_d,"U")
+```
+
+### Matchings
+In the original C++ code, matchings were of type `std::unordered_map<std::string, std::string>`. This is automatically marshalled to a named character vector in R. The entire matching can be output, or the individual marriages can be accessed using the male name as the index.
+
+## Example 1 - using built-in preference tables
+
+```{r}
+matching1 = find_stable_marriages(male_prefs3, female_prefs3, "U")
+matching1
+```
+
+There is also a safe implementation of the algorithm that checks that the preference tables are compatible before finding a stable matching instead of giving a useless error message when an issue arises.
+
+```{r}
+find_stable_marriages_safe(male_prefs3, female_prefs3, "U")
+find_stable_marriages_safe(male_prefs3, male_prefs3, "U") #incompatible preference tables
+find_stable_marriages(male_prefs3, male_prefs3, "U") 
+```
+
+
+## Example 2 - using random preference tables
+```{r}
+M = c('A','B','C','D','E')
+FM = c('a','b','c','d','e')
+
+set.seed(1111)
+male2 = random_pref_table(M,FM)
+female2 = random_pref_table(FM,M)
+
+matching2 = find_stable_marriages(male2,female2,"U")
+matching2["A"]
+```
+

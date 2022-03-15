@@ -46,11 +46,18 @@ std::unordered_map<std::string,long> get_scores_int(
 }
 
 
-/* a function that uses preference tables and runs the Fundamental Algorithm 
- * to find a stable marriage.
- * Also takes the string to assign to the undesirable male.
- * Returns a matching with male keys and female values.
- */
+//' Implementation of the fundamental algorithm for the stable marriage problem
+//'
+//' A function that uses a pair of preference tables and runs the Fundamental Algorithm to find a stable matching.
+//' 
+//' @param male_prefs male preference table (list or dataframe)
+//' @param female_prefs female preference table (list or dataframe)
+//' @param U string name for undesirable male
+//' 
+//' @return a stable matching with male names and female values (named character vector)
+//' @examples
+//' find_stable_marriages(male_prefs3, female_prefs3, "U")
+//' 
 // [[Rcpp::export]]
 std::unordered_map<std::string, std::string> find_stable_marriages(
     List male_prefs, 
