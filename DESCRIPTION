@@ -1,0 +1,11 @@
+Package: stablemarriage
+Type: Package
+Title: Fundamental algorithm for the stable marriage problem
+Version: 1.0
+Date: 2022-03-08
+Author: Danielle Notice
+Maintainer: Danielle Notice <your@email.com>
+Description: One paragraph description of what the package does as one or more full sentences.
+License: GPL (>= 2)
+Imports: Rcpp (>= 1.0.8)
+LinkingTo: Rcpp
