@@ -1,0 +1,66 @@
+---
+title: "Task 3 - the 5 Rs"
+author: "Danielle Notice"
+date: "16 March 2022"
+output: html_document
+---
+
+As discussed by [Benureau and Rougier](https://www.frontiersin.org/articles/10.3389/fninf.2017.00069/full), the code should be:
+
+- executable (re-runnable)
+- produce the same result more than once (repeatable)
+- it should allow an investigator to reobtain the published results (reproducible)
+- while being easy to use, understand and modify (reusable),
+- should act as an available reference for any ambiguity in the algorithmic descriptions of the article (replicable).
+
+We will discuss how each of the assignment implementations satisfy these criteria, giving each a score out of 5.
+
+## Python Implementation
+
+#### Rerunnable - 3
+Version of Python used was stated, but could have been improved by stating the version of each library used.
+
+#### Repeatable - 5
+No random elements in the algorithm itself, so results will always be the same for a given input.
+
+#### Reproducible - 3
+For similar reasons as the rerunnable score, different versions of Python and its libraries may lead to slightly different results (eg. how Python loops through dictionaries). In terms of the run time analysis, of course different machines will lead to different results and the OS specifications were not specifically stated.
+
+#### Reusable - 5
+Code was well documented, and can accomodate preference tables of different sizes and with different naming conventions.
+
+#### Replicable - 2
+Code on its own in general does not meet this criteria. However the code was written in a way which matched the operations described by the algorithm as closely as possible. 
+
+## C++ Implementation
+
+#### Rerunnable - 4
+The version of C++ was stated, and this implicitly covers the version of the other libraries used (since they were all part of the STL library).
+
+#### Repeatable - 3
+There is some randomness (or unknown aspect) in how C++ loops through elements of an unordered map. I tried to improve this by sorting the list. But this could have been improved by using ordered maps instead.
+
+#### Reproducible - 4
+For similar reasons as the repeatable score, the results may be output in a different order, however they should ultimately be the same. Also for the same reason as the rerunnable score, there should be no issue with the library versions.
+
+#### Reusable - 3
+In my opinion, C++ is alot more difficult to understand and modify than Python. However the code is well documented, so if you are comfortable with the language, it should be reusable.
+
+#### Replicable - 2
+Same reason as for the score given to the Python implementation.
+
+## R package Implementation
+#### Rerunnable - 5
+The package description includes the version of R that was used when building the package, as well as all the packages and their versions that need to be imported to support the package.
+
+#### Repeatable - 3
+For the same reason as the score given for the C++ implementation. 
+
+#### Reproducible - 5
+The package includes the exact functions and data used to obtain the results in the vignette.
+
+#### Reusable - 3
+Package is well documented so it is easy to use and understand. However, further clarity could have been provided about the input data. Also, since the code is saved a package it is rather complicated to modify.
+
+#### Replicable - 2
+Same reason as the score for the Python and C++ implementation. Further, nowhere in the documentation of the package is there a clear description of the algorithm, which could have improved its replicability. 
