@@ -8,6 +8,7 @@ Maintainer: Danielle Notice <d.a.notice@lancaster.ac.uk>
 Description: A package which implements the fundamental algorithm of the stable marriage algorithm as described by 
   Donald E. Knuth and Martin Goldstein in "Stable Marriage and Its Relation to Other Combinatorial Problems : An Introduction to the Mathematical Analysis of Algorithms".
   The package also includes useful functions for creating and checking preference tables, as well as example data.
+  Built in R version 3.6.3.
 License: GPL (>= 2)
 Imports: Rcpp (>= 1.0.8)
 LinkingTo: Rcpp
